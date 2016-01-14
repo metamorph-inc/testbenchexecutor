@@ -41,6 +41,8 @@ class TestBenchExecutor:
                 step["ExecutionStartTimestamp"] = None
                 step["ExecutionCompletionTimestamp"] = None
 
+        self._load_tb_manifest()
+
         if len(self._steps) == 0:
             raise NoStepsException("No execution steps found in manifest")
 
@@ -173,9 +175,9 @@ class TestBenchExecutor:
         any_failed = False
         any_unexecuted = False
         for step in self._steps:
-            if step["Status"] is "FAILED":
+            if step["Status"] == "FAILED":
                 any_failed = True
-            elif step["Status"] is "UNEXECUTED":
+            elif step["Status"] == "UNEXECUTED":
                 any_unexecuted = True
 
         with self._update_manifest() as manifest:
