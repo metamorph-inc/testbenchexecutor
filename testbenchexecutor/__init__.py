@@ -17,7 +17,7 @@ class NoStepsException(Exception):
         repr(self.value)
 
 
-class TestBenchExecutor:
+class TestBenchExecutor(object):
     _path_manifest = ''
     _dict_manifest = dict()
     _steps = list()
