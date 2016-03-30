@@ -8,7 +8,7 @@ from setuptools import setup
 
 setup(
     name='testbenchexecutor',
-    version='0.1.1',
+    version='0.1.2',
     author='MetaMorph Software, Inc',
     author_email='adam@metamorphsoftware.com',
     description='Executes the steps in a Test Bench manifest',
