@@ -153,5 +153,10 @@ class TestTBManifestFailedStep(TBManifestTestBase):
         self.assertEqual("FAILED", manifest["Status"])
 
 
+class TestTBManifestAnalysisStep(TestTBManifestFailedStep):
+    __org_manifest_path__ = os.path.join(_this_dir, "test_tb_manifest_fail_analysis.json")
+    __test_manifest_path__ = os.path.join(_this_dir, "test_tb_manifest_fail_analysis_tmp.json")
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -2,3 +2,8 @@ build/
 dist/
 testbenchexecutor.egg-info/
 venv/
+testbenchexecutor/*_tmp.json
+testbenchexecutor/_FAILED.txt
+testbenchexecutor/log/
+.coverage
+cover/

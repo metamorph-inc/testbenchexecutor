@@ -34,7 +34,7 @@
       "Description": null,
       "ExecutionCompletionTimestamp": null,
       "ExecutionStartTimestamp": null,
-      "Invocation": "doesnt_exist.exe .",
+      "Invocation": "cmd /c exit /b 3",
       "Parameters": [],
       "PostProcess": null,
       "PreProcess": null,

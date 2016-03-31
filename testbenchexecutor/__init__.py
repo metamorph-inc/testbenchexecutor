@@ -3,6 +3,7 @@ __author__ = 'adam'
 
 import sys
 import os
+import io
 import errno
 import json
 import datetime
@@ -117,7 +118,7 @@ class TestBenchExecutor(object):
     def _update_manifest(self):
         """
         Load the manifest, run code, then save it
-        
+
         Use as: with self._update_manifest() as manifest: manifest['this'] = 'that'
         """
         with open(self._path_manifest, 'r') as f:
@@ -205,7 +206,7 @@ class TestBenchExecutor(object):
             except OSError as e:
                 if e.errno != errno.EEXIST:
                     raise
-            log = open(logpath, "wb")
+            log = io.open(logpath, "w", encoding="utf-8")
             with open(os.devnull, "r") as null_file:
                 invocation = step["Invocation"]
                 if invocation.lower().startswith("python.exe "):
@@ -214,6 +215,7 @@ class TestBenchExecutor(object):
                 if os.path.splitext(invocation[0])[1].lower() in ('.cmd', '.bat'):
                     # special-case, since cmd.exe doesn't directly support UNC paths (e.g. shared folders). Scripts should also include "pushd %~dp0"
                     invocation[0] = os.path.join(os.getcwd(), os.path.dirname(self._path_manifest), invocation[0])
+                log.write(u"Running '%s'\n" % invocation)
                 log.flush()
                 subprocess.check_call(invocation, stdin=null_file, stdout=log, stderr=subprocess.STDOUT,
                                       shell=False, close_fds=False,
@@ -227,17 +229,17 @@ class TestBenchExecutor(object):
             step = self._update_step(step, {"ExecutionCompletionTimestamp": self._time})
             step = self._update_step(step, {"Status": "FAILED"})
             self._mark_manifest_status()
-            log.write(str(e))
-            with open(os.path.join(os.path.dirname(os.path.abspath(self._path_manifest)), "_FAILED.txt"), "w") as failed:
-                failed.write('"%s" failed:\n' % invocation)
-                failed.write(str(e))
-                failed.write('\n\nSee log: %s' % step["LogFile"])
+            log.write(u"%s" % e)
+            with io.open(os.path.join(os.path.dirname(os.path.abspath(self._path_manifest)), "_FAILED.txt"), "w", encoding="utf-8") as failed:
+                failed.write(u'"%s" failed:\n' % invocation)
+                failed.write(u"%s" % e)
+                failed.write(u'\n\nSee log: %s' % step["LogFile"])
             return -1
         except OSError as e:
             step = self._update_step(step, {"ExecutionCompletionTimestamp": self._time})
             step = self._update_step(step, {"Status": "FAILED"})
             self._mark_manifest_status()
-            log.write(str(e))
+            log.write(u"%s" % e)
             return -1
         finally:
             if log:
