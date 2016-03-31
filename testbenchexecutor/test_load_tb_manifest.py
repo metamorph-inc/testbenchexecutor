@@ -1,10 +1,11 @@
+from __future__ import absolute_import
 import unittest
 import shutil
 import json
 import errno
 import os.path
 
-from __init__ import TestBenchExecutor
+from testbenchexecutor import TestBenchExecutor
 import dateutil.parser
 
 
