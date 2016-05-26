@@ -24,7 +24,7 @@ class TestBenchExecutor(object):
     _dict_manifest = dict()
     _steps = list()
 
-    def __init__(self, manifest_path):
+    def __init__(self, manifest_path, detailed=False):
         """
         @param manifest_path: The path to the test bench manifest
         @type manifest_path: str
@@ -34,6 +34,7 @@ class TestBenchExecutor(object):
         """
 
         self._path_manifest = manifest_path
+        self._detailed = detailed
         self._load_tb_manifest()
         # TODO: command-line option to skip this
         with self._update_manifest() as manifest:
@@ -230,16 +231,33 @@ class TestBenchExecutor(object):
             step = self._update_step(step, {"Status": "FAILED"})
             self._mark_manifest_status()
             log.write(u"%s" % e)
+            log.close()
+            log = None
             with io.open(os.path.join(os.path.dirname(os.path.abspath(self._path_manifest)), "_FAILED.txt"), "w", encoding="utf-8") as failed:
                 failed.write(u'"%s" failed:\n' % invocation)
                 failed.write(u"%s" % e)
                 failed.write(u'\n\nSee log: %s' % step["LogFile"])
+
+                if self._detailed:
+                    with io.open(logpath, "r", encoding="utf-8") as logread:
+                        loglines = logread.readlines()
+                        if len(loglines) > 10:
+                            failed.write(u'\n\nPartial log:\n')
+                        else:
+                            failed.write(u'\n\nLog contents:\n')
+                        for logline in loglines[-10:]:
+                            failed.write(logline)
             return -1
         except OSError as e:
             step = self._update_step(step, {"ExecutionCompletionTimestamp": self._time})
             step = self._update_step(step, {"Status": "FAILED"})
             self._mark_manifest_status()
+            if not log:
+                raise
             log.write(u"%s" % e)
+            with io.open(os.path.join(os.path.dirname(os.path.abspath(self._path_manifest)), "_FAILED.txt"), "w", encoding="utf-8") as failed:
+                failed.write(u'"%s" failed:\n' % invocation)
+                failed.write(u"%s" % e)
             return -1
         finally:
             if log:
