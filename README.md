@@ -1,1 +1,1 @@
-`pip install --upgrade https://github.com/metamorph-inc/testbenchexecutor/tarball/master`
+`python -m pip install --index-url https://pypi.metamorphsoftware.com/ testbenchexecutor`
