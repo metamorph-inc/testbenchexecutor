@@ -7,3 +7,4 @@ testbenchexecutor/_FAILED.txt
 testbenchexecutor/log/
 .coverage
 cover/
+*.pyc
