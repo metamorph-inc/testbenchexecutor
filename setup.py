@@ -13,8 +13,9 @@ setup(
     author='MetaMorph Software, Inc',
     author_email='adam@metamorphsoftware.com',
     description='Executes the steps in a Test Bench manifest',
-    packages=['testbenchexecutor'],
+    packages=['testbenchexecutor', 'testbenchexecutor.templates'],
     package_dir={'testbenchexecutor': 'testbenchexecutor'},
+    package_data={'testbenchexecutor.templates': ['*.css', '*.html']},
     install_requires=['python-dateutil'],
     entry_points = {
         "console_scripts": [
