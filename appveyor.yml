@@ -5,16 +5,21 @@ install:
   - '.\venv\Scripts\pip install --upgrade -r requirements.txt nose'
 build_script:
   - '.\venv\Scripts\python setup.py bdist_wheel'
+  - 'move /y dist\*.whl .'
 test_script:
   - '.\venv\Scripts\nosetests'
 artifacts:
-  - path: 'dist\*.whl'
-#deploy:
-#  - provider: GitHub
-#    artifact: 'dist\*.whl'
-#    draft: false
-#    prerelease: false
-#    auth_token:
-#      secure:
-#    on:
-#      appveyor_repo_tag: true
+  - path: '*.whl'
+    name: whl
+deploy:
+  provider: S3
+  access_key_id: AKIAJCSEQOUWIU2HK3SQ
+  secret_access_key:
+    secure: gKHiok/Emkvb298mPcxWXTn2ttSFnRTEmsaTYex3qZlqHSRVptKjvD2bVeA4XJ7a
+  bucket: pypi.metamorphsoftware.com
+  region: us-east-1
+  artifact: whl
+  folder: testbenchexecutor
+  on:
+    appveyor_repo_tag: true
+
