@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+from __future__ import absolute_import, division
 
 import sys
 import os
@@ -60,7 +60,7 @@ def parse(command):
                 if not match:
                     match = re.search(_quote_regex, command[start:])
                 if match:
-                    arg = arg + re.sub(r'((?:\\\\)*)\\"', lambda s: '\\' * (len(s.group(1)) / 2) + '"', match.groups()[0]) + '\\' * (len(match.groups()[1]) / 2)
+                    arg = arg + re.sub(r'((?:\\\\)*)\\"', lambda s: '\\' * (len(s.group(1)) // 2) + '"', match.groups()[0]) + '\\' * (len(match.groups()[1]) // 2)
                 if not match:
                     raise ValueError('Bug: could not match {!r}'.format(command[start:]))
 
