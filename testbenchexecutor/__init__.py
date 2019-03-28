@@ -16,10 +16,7 @@ __author__ = 'adam'
 
 class NoStepsException(Exception):
     def __init__(self, value):
-        self.value = value
-
-    def __str__(self):
-        repr(self.value)
+        super(NoStepsException, self).__init__(value)
 
 _unquoted_regex = r'^([^" ]+)'
 _space_regex = r'^( |$)+'
