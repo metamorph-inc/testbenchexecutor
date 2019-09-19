@@ -16,7 +16,7 @@ setup(
     packages=['testbenchexecutor', 'testbenchexecutor.templates'],
     package_dir={'testbenchexecutor': 'testbenchexecutor'},
     package_data={'testbenchexecutor.templates': ['*.css', '*.html']},
-    install_requires=['python-dateutil'],
+    install_requires=['python-dateutil', 'Jinja2'],
     entry_points = {
         "console_scripts": [
             "testbenchexecutor = testbenchexecutor.__main__:main",
