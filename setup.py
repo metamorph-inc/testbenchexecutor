@@ -9,14 +9,14 @@ from setuptools import setup
 
 setup(
     name='testbenchexecutor',
-    version='0.1.6',
+    version='0.1.7',
     author='MetaMorph Software, Inc',
-    author_email='adam@metamorphsoftware.com',
+    author_email='adam.nagel@gmail.com',
     description='Executes the steps in a Test Bench manifest',
     packages=['testbenchexecutor', 'testbenchexecutor.templates'],
     package_dir={'testbenchexecutor': 'testbenchexecutor'},
     package_data={'testbenchexecutor.templates': ['*.css', '*.html']},
-    install_requires=['python-dateutil'],
+    install_requires=['python-dateutil', 'Jinja2'],
     entry_points = {
         "console_scripts": [
             "testbenchexecutor = testbenchexecutor.__main__:main",
