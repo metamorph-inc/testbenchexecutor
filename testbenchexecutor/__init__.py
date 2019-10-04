@@ -70,7 +70,7 @@ class TestBenchExecutor(object):
     _dict_manifest = dict()
     _steps = list()
 
-    def __init__(self, manifest_path, detailed=False, ignore_env_vars=True):
+    def __init__(self, manifest_path, detailed=False, read_env_vars=False):
         """
         @param manifest_path: The path to the test bench manifest
         @type manifest_path: str
@@ -81,7 +81,7 @@ class TestBenchExecutor(object):
 
         self._path_manifest = manifest_path
         self._detailed = detailed
-        self._ignore_env_vars = ignore_env_vars
+        self._read_env_vars = read_env_vars
         self._load_tb_manifest()
         # TODO: command-line option to skip this
         with self._update_manifest() as manifest:
@@ -262,7 +262,7 @@ class TestBenchExecutor(object):
             with open(os.devnull, "r") as null_file:
                 invocation = step["Invocation"]
                 if invocation.lower().startswith("python.exe "):
-                    ignore_env_vars_opt = "\"-E\" " if self._ignore_env_vars else ""
+                    ignore_env_vars_opt = "" if self._read_env_vars else "\"-E\" "
                     invocation = "\"" + sys.executable + "\" " + ignore_env_vars_opt + step["Invocation"][len("python.exe "):]
                 invocation = parse(invocation)
                 if os.path.splitext(invocation[0])[1].lower() in ('.cmd', '.bat'):
