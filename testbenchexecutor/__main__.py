@@ -10,12 +10,15 @@ def main():
                         help='run only the first unexecuted step (default: run all unexecuted steps)')
     parser.add_argument('--detailed-errors', '-d', action='store_true',
                         help='On step failure, output last few lines of log')
+    parser.add_argument('--ignore-python-env-variables', action='store_true',
+                        help='Ignore Python* Environment Variables, e.g. PYTHONPATH and PYTHONHOME')
     parser.add_argument('manifest', type=str, nargs=1,
                         help='the path of the manifest to be executed')
 
     args = parser.parse_args()
 
-    executor = TestBenchExecutor(args.manifest[0], detailed=args.detailed_errors)
+    executor = TestBenchExecutor(args.manifest[0], detailed=args.detailed_errors,
+                                 ignore_env_vars=args.ignore_python_env_variables)
 
     if args.run_one:
         sys.exit(executor.run_next_step())
