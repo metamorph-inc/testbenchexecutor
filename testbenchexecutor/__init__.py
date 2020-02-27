@@ -10,6 +10,7 @@ import contextlib
 import re
 
 import testbenchexecutor.tb_report_generator
+import testbenchexecutor.progress_service
 
 __author__ = 'adam'
 
@@ -246,6 +247,11 @@ class TestBenchExecutor(object):
         ### Execute step
         try:
             import subprocess
+
+            step_name = step["Description"]
+            if not step_name: # Fall back to invocation if description is None or empty
+                step_name = step["Invocation"]
+            testbenchexecutor.progress_service.update_progress("Running \"{}\"...".format(step_name), -1, -1)
 
             if not step.get("LogFile"):
                 step = self._update_step(step, {

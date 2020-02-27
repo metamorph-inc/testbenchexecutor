@@ -9,7 +9,7 @@ from setuptools import setup
 
 setup(
     name='testbenchexecutor',
-    version='0.1.7',
+    version='0.1.8',
     author='MetaMorph Software, Inc',
     author_email='adam.nagel@gmail.com',
     description='Executes the steps in a Test Bench manifest',
