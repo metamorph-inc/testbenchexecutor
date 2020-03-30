@@ -9,11 +9,11 @@ from setuptools import setup
 
 setup(
     name='testbenchexecutor',
-    version='0.1.8',
+    version='0.1.9',
     author='MetaMorph Software, Inc',
     author_email='adam.nagel@gmail.com',
     description='Executes the steps in a Test Bench manifest',
-    packages=['testbenchexecutor', 'testbenchexecutor.templates'],
+    packages=['testbenchexecutor', 'testbenchexecutor.templates', 'testbenchexecutor.progress_service', 'testbenchexecutor.progress_service.gen'],
     package_dir={'testbenchexecutor': 'testbenchexecutor'},
     package_data={'testbenchexecutor.templates': ['*.css', '*.html']},
     install_requires=['python-dateutil', 'Jinja2'],
