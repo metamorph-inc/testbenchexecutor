@@ -23,5 +23,8 @@ setup(
         "console_scripts": [
             "testbenchexecutor = testbenchexecutor.__main__:main",
         ]
-    }
+    },
+    project_urls={
+        'Source': 'https://github.com/metamorph-inc/testbenchexecutor',
+    },
 )
