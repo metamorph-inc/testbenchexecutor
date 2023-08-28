@@ -295,7 +295,7 @@ class TestBenchExecutor(object):
                 failed.write(u'\n\nSee log: %s' % step["LogFile"])
 
                 if self._detailed:
-                    with io.open(logpath, "r", encoding="utf-8") as logread:
+                    with io.open(logpath, "r", encoding="utf-8", errors="replace") as logread:
                         loglines = logread.readlines()
                         if len(loglines) > 10:
                             failed.write(u'\n\nPartial log:\n')

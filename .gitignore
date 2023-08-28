@@ -8,3 +8,4 @@ testbenchexecutor/log/
 .coverage
 cover/
 *.pyc
+.python_version

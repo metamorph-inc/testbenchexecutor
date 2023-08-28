@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 import unittest
 import shutil
+import sys
 import json
 import errno
 import os.path
@@ -156,6 +157,26 @@ class TestTBManifestFailedStep(TBManifestTestBase):
 class TestTBManifestAnalysisStep(TestTBManifestFailedStep):
     _org_manifest_path = os.path.join(_this_dir, "test_tb_manifest_fail_analysis.json")
     _test_manifest_path = os.path.join(_this_dir, "test_tb_manifest_fail_analysis_tmp.json")
+
+
+# Tests for correct handling of non-unicode data in execution steps' logs
+@unittest.skipIf(sys.version_info < (3, 7), "Test depends on Python >= 3.7 feature at runtime")
+class TestTBManifestUnicodeLogs(TestLoadTBManifest):
+    _org_manifest_path = os.path.join(_this_dir, "test_tb_manifest_latin1_logs.json")
+    _test_manifest_path = os.path.join(_this_dir, "test_tb_manifest_latin1_logs_tmp.json")
+
+
+# Tests for correct handling of non-unicode data in execution steps' logs when
+# step fails (and we emit _FAILED.txt)
+@unittest.skipIf(sys.version_info < (3, 7), "Test depends on Python >= 3.7 feature at runtime")
+class TestTBManifestUnicodeLogsFail(TestTBManifestFailedStep):
+    _org_manifest_path = os.path.join(_this_dir, "test_tb_manifest_latin1_logs_fail.json")
+    _test_manifest_path = os.path.join(_this_dir, "test_tb_manifest_latin1_logs_fail_tmp.json")
+
+    def setUp(self):
+        self._create_clean_manifest_copy()
+        self.executor = TestBenchExecutor(self._test_manifest_path, detailed=True)
+        self._rm_log_dir()
 
 
 if __name__ == '__main__':

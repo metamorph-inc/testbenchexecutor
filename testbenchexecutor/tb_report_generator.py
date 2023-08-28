@@ -20,7 +20,7 @@ def generate_html_report(manifest_path, manifest_dict):
         logPath = step["LogFile"]
         if logPath != None:
             try:
-                with io.open(os.path.join(manifest_dir, logPath), "r", encoding="utf-8") as logread:
+                with io.open(os.path.join(manifest_dir, logPath), "r", encoding="utf-8", errors="replace") as logread:
                     loglines = logread.readlines()
                     if len(loglines) > 10:
                         header = 'Partial log:'
