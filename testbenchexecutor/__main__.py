@@ -5,6 +5,9 @@ import argparse
 
 
 def main():
+    sys.stdout.reconfigure(encoding='utf-8')
+    sys.stderr.reconfigure(encoding='utf-8')
+
     parser = argparse.ArgumentParser(description='Execute a test bench')
     parser.add_argument('--run-one', action='store_true',
                         help='run only the first unexecuted step (default: run all unexecuted steps)')
